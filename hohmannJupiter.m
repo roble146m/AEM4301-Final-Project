@@ -10,7 +10,7 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
     muS=1.327e11;          %Gravitational parameter for Sun
     aE = 149.6e6;
     aJ = 778.6e6;
-    deltaVsc = sqrt((2*muS/aE) - (2*muS/(aE+aJ))) - sqrt(muS/aE); 
+    deltaVsc = sqrt((2*muS/aE) - (2*muS/(aE+aJ))) - sqrt(muS/aE); % = 8.7933
 
     %maxDays= (pi/sqrt(muS))*sqrt(((ae+aj)/2)^3)/(3600*24); % Number of days to follow the spaceraft = t12
                          % for Earth-Venus transfer
@@ -68,3 +68,6 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
    %This worked pretty well. We can still adjust the launch day for closer
    %interception.
  
+   %% Final Parameters: 
+    % deltaVsc = 8.9
+    % Launch Date: Oct. 11, 2026
