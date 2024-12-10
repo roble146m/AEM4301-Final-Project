@@ -25,7 +25,7 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
 
     finalDate=initialDate+days(maxDays); %date when sc stops appearing in simulation
     
-    launchDay=12; % # of days to launch from Start Date
+    launchDay=13; % # of days to launch from Start Date
 
     tinit=datetime(initialDate); %initial date in date format
 %% Stay on Earth until day of launch use Curtis function
