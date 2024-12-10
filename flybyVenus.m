@@ -1,4 +1,4 @@
-function [rsc,vsc,finalDate] = hohmannVenus(initialDate)
+function [rsc,vsc,finalDate] = flybyVenus(initialDate)
 %function [rsc,vsc,finalDate] = spacecraft(initialDate)
 
 % Simulates a Hohmann transfer to Venus
