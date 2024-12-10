@@ -58,7 +58,6 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
 
     Vsc = V + 8.9*V/norm(V); 
     
-
    % Calculate the orbital elements for spacecraft
    [h,a,e,w,E0]=scElements(R,Vsc);
 
