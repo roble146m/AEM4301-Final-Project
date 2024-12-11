@@ -16,7 +16,7 @@ function [rsc,vsc,finalDate] = hohmannVenus(initialDate)
 
     finalDate=initialDate+days(maxDays); %date when sc stops appearing in simulation
     
-    launchDay=12; % # of days to launch from Start Date
+    launchDay=0; % # of days to launch from Start Date
 
     tinit=datetime(initialDate); %initial date in date format
 %% Stay on Earth until day of launch use Curtis function
@@ -46,7 +46,7 @@ function [rsc,vsc,finalDate] = hohmannVenus(initialDate)
     %launch should be 2.5 km/s less than that of Earths and in the same
     %direction.
 
-    Vsc = V - 2.5*V/norm(V); 
+    Vsc = V - 2.49*V/norm(V); 
    
 
     % Calculate the orbital elements for spacecraft
