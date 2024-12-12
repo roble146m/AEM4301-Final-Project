@@ -14,7 +14,7 @@ function [rsc,vsc,finalDate] = dsm_to_flyby2(initialDate)
 
     mu=1.327e11;          % Gravitational parameter for Sun
 
-    maxDays=1306;         % Number of days to follow the spaceraft 
+    maxDays=1317;         % Number of days to follow the spaceraft 
 
     dsmDay = 175;         % This is the dayCount where DSM is executed
                           % Can be refined (near apoapsis)
