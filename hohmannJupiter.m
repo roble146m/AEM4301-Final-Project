@@ -17,7 +17,7 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
 
     maxDays = 998;
     nj = 2*pi/(11.86*365); % angular velocity (rad/day)
-    phi0 = pi - nj*maxDays; % lead anlge (rad)
+    phi0 = pi - nj*maxDays % lead anlge (rad)
     phideg = phi0*180/pi % Lead angle in degrees
 
     rsc=zeros(maxDays,3); % Position vector array for spacecraft
@@ -56,7 +56,7 @@ function [rsc,vsc,finalDate] = hohmannJupiter(initialDate)
     %direction.
     % For jupiter, it's about 8.7933
 
-    Vsc = V + 8.9*V/norm(V); 
+    Vsc = V + 8.9*V/norm(V) 
     
    % Calculate the orbital elements for spacecraft
    [h,a,e,w,E0]=scElements(R,Vsc);
