@@ -46,7 +46,7 @@ function [rsc,vsc,finalDate] = flybyEuropaClipper(initialDate)
     [coe, R, V, jd] =planet_elements_and_sv_coplanar ...
     (1.327e11, 3, y, m, d, 0, 0, 0);
 
-    Vsc = V + 6*V/norm(V); 
+    Vsc = V + 8*V/norm(V); 
    
     % Calculate the orbital elements for spacecraft
    [h,a,e,w,E0]=scElements(R,Vsc);
@@ -58,17 +58,17 @@ function [rsc,vsc,finalDate] = flybyEuropaClipper(initialDate)
 %% Mars Flyby
 
     load MarsFB1.mat
-    [Vout,DeltaMin]=flyby(Vp1,Vsc1,4000,42828,3396,1)
+    [Vout,DeltaMin]=flyby(Vp1,Vsc1,4000,42828,3396,0)
     DeltaMin % 3572.429449
 
      % Calculate the orbital elements for spacecraft
     [h,a,e,w,E0]=scElements(R,Vsc);
 
-    fbday2 = 1000000;
+    fbday2 = 10000;
 
     % propagate the new orbit for spacecraft 
-   [rsc,vsc]=propagate(h,a,e,w,E0,launchDay+1,fbday2,rsc,vsc);
+   [rsc,vsc]=propagate(h,a,e,w,E0,fbday1+1,fbday2,rsc,vsc);
 
-%% Earth Flyby to Jupiter
+%% Earth Flyby
 
-
+%% Arrival at Jupiter
