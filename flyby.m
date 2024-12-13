@@ -29,3 +29,4 @@ if Delta<DeltaMin
 end
 VinfOut=vinf*[cos(thetaOut),sin(thetaOut),0];
 Vout=Vp+VinfOut;
+Vout-Vsc

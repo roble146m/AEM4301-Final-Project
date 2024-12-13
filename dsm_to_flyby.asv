@@ -14,11 +14,11 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
 
     mu=1.327e11;          % Gravitational parameter for Sun
 
-    maxDays=1000;         % Number of days to follow the spaceraft 
+    maxDays=100000;         % Number of days to follow the spaceraft 
 
-    dsmDay = 250;         % This is the dayCount where DSM is executed
+    dsmDay = 255;         % This is the dayCount where DSM is executed
                           % Can be refined (near apoapsis)
-    fbday1 = 1000;         % This will be the day of flyby. Can be refined.
+    fbday1 = 824;         % This will be the day of flyby. Can be refined.
 
     rsc=zeros(maxDays,3); % Position vector array for spacecraft
     vsc=zeros(maxDays,3); % Velocity vector array for spacecraft
@@ -55,7 +55,7 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
     % A rough possible value for the heliocentric velocity; change is used
     % below. Can be improved through trial and error
     
-    Vsc = V + 5.3*V/norm(V); 
+    Vsc = V + 6.5*V/norm(V); 
    
     % Calculate the orbital elements for spacecraft
     [h,a,e,w,E0]=scElements(R,Vsc);
@@ -73,17 +73,17 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
    % Determine orbital elements of resulting trajectory
    [h,a,e,w,E0]=scElements(R,Vsc);   
 
-   %propagate until interception of Earth fbday1 (defined above but can
-   %change)
+   % propagate until interception of Earth fbday1 (defined above but can
+   % change)
 
    [rsc,vsc]=propagate(h,a,e,w,E0,dsmDay+1,fbday1,rsc,vsc);
 
-   Now execute the flyby and propagate all the way to Jupiter
-
-   load EarthFB3.mat
+   % Now execute the flyby and propagate all the way to Jupiter
+   load MarsFB1.mat
 
    % Calculate the velocity after the flyby
-   [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,400000,126686534,71490,1) % FIX DELTA
+   % [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,2555000,126686534,71490,0) % FIX DELTA
+   [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,10000,398600,6378,1) % FIX DELTA
    DeltaMin %Can output Deltamin to keep the aiming radius above this value
 
    %Calculate the orbital elements for the spacecraft after the flyby

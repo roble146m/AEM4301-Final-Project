@@ -1,4 +1,4 @@
-function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
+function [rsc,vsc,finalDate] = dsm_to_flyby2(initialDate)
 
 % When designing a return trajectory to Earth (for a flyby), 
 % we need to determine two things: 1. Initial heliocentric change in
@@ -14,18 +14,18 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
 
     mu=1.327e11;          % Gravitational parameter for Sun
 
-    maxDays=1329;         % Number of days to follow the spaceraft 
+    maxDays=1317;         % Number of days to follow the spaceraft 
 
-    dsmDay = 255;         % This is the dayCount where DSM is executed
+    dsmDay = 175;         % This is the dayCount where DSM is executed
                           % Can be refined (near apoapsis)
-    fbday1 = 679;         % This will be the day of flyby. Can be refined.
+    fbday1 = 671;         % This will be the day of flyby. Can be refined.
 
     rsc=zeros(maxDays,3); % Position vector array for spacecraft
     vsc=zeros(maxDays,3); % Velocity vector array for spacecraft
 
     finalDate=initialDate+days(maxDays); %date when sc stops appearing in simulation
     
-    launchDay=12; % # of days to launch from Start Date (can be changed).
+    launchDay=0; % # of days to launch from Start Date (can be changed).
 
     tinit=datetime(initialDate); %initial date in date format
 
@@ -55,7 +55,7 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
     % A rough possible value for the heliocentric velocity; change is used
     % below. Can be improved through trial and error
     
-    Vsc = V + 5.3*V/norm(V); 
+    Vsc = V + 5.4*V/norm(V) 
    
     % Calculate the orbital elements for spacecraft
     [h,a,e,w,E0]=scElements(R,Vsc);
@@ -68,7 +68,7 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
 
    Vsc = vsc(dsmDay,:); %velocity on dsmDay
    R = rsc(dsmDay,:); %Position vector on dsmDay
-   Vsc=Vsc -1*Vsc/norm(Vsc); % Decrease velocity. Experiment with magnitude of Delta V here.
+   Vsc=Vsc -1*Vsc/norm(Vsc) % Decrease velocity. Experiment with magnitude of Delta V here.
 
    % Determine orbital elements of resulting trajectory
    [h,a,e,w,E0]=scElements(R,Vsc);   
@@ -79,12 +79,11 @@ function [rsc,vsc,finalDate] = dsm_to_flyby(initialDate)
    [rsc,vsc]=propagate(h,a,e,w,E0,dsmDay+1,fbday1,rsc,vsc);
 
    % Now execute the flyby and propagate all the way to Jupiter
-   load EarthFB3.mat
+   load EarthFBJuno1.mat
 
    % Calculate the velocity after the flyby
-   [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,2555000,126686534,71490,0) % FIX DELTA
-   % [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,3700,42828,3396,0) % FIX DELTA
-   DeltaMin %Can output Deltamin to keep the aiming radius above this value
+   [Vsc1,DeltaMin]=flyby(Vp1,Vsc1,8600,398600,6378,0); % FIX DELTA
+   DeltaMin; %Can output Deltamin to keep the aiming radius above this value
 
    %Calculate the orbital elements for the spacecraft after the flyby
    [h,a,e,w,E0]=scElements(R1,Vsc1);
