@@ -10,9 +10,9 @@ function [rsc,vsc,finalDate] = flybyEuropaClipper(initialDate)
     aJ = 778.6e6;          % Distance from Jupiter to Sun
     deltaVsc = sqrt((2*muS/aE) - (2*muS/(aE+aM))) - sqrt(muS/aE) % = 2.9433
 
-    maxDays=300;         % Number of days to follow the spaceraft = t12
+    maxDays=1769;         % Number of days to follow the spaceraft = t12
                          % for Earth-Mars flyby
-    fbday1 = 127;        % Launched Nov. 13th 2026
+    fbday1 = 149;        % Launched Nov. 6th 2026
 
     rsc=zeros(maxDays,3); % Position vector array for spacecraft
     vsc=zeros(maxDays,3); % Velocity vector array for spacecraft
@@ -46,7 +46,7 @@ function [rsc,vsc,finalDate] = flybyEuropaClipper(initialDate)
     [coe, R, V, jd] =planet_elements_and_sv_coplanar ...
     (1.327e11, 3, y, m, d, 0, 0, 0);
 
-    Vsc = V + 6*V/norm(V); 
+    Vsc = V + 6.16*V/norm(V); 
    
     % Calculate the orbital elements for spacecraft
    [h,a,e,w,E0]=scElements(R,Vsc);
@@ -58,17 +58,25 @@ function [rsc,vsc,finalDate] = flybyEuropaClipper(initialDate)
 %% Mars Flyby
 
     load MarsFB1.mat
-    [Vout,DeltaMin]=flyby(Vp1,Vsc1,4000,42828,3396,1)
-    DeltaMin % 3572.429449
+    [Vout,DeltaMin]=flyby(Vp1,Vsc1,3800,42828,3396,0)
+    DeltaMin % 3683.789280  
 
      % Calculate the orbital elements for spacecraft
-    [h,a,e,w,E0]=scElements(R,Vsc);
+    [h,a,e,w,E0]=scElements(R1,Vout);
 
-    fbday2 = 1000000;
+    fbday2 = 792; %Jan 5 2029
 
     % propagate the new orbit for spacecraft 
-   [rsc,vsc]=propagate(h,a,e,w,E0,launchDay+1,fbday2,rsc,vsc);
+   [rsc,vsc]=propagate(h,a,e,w,E0,fbday1+1,fbday2,rsc,vsc);
 
 %% Earth Flyby to Jupiter
+    load JupiterFB1.mat
+    [Vout,DeltaMin]=flyby(Vp1,Vsc1,496000,126686534,71490,1)
+    DeltaMin % 124995
 
+     % Calculate the orbital elements for spacecraft
+    [h,a,e,w,E0]=scElements(R1,Vout);
+
+    % propagate the new orbit for spacecraft 
+   [rsc,vsc]=propagate(h,a,e,w,E0,fbday2+1,maxDays,rsc,vsc);
 
